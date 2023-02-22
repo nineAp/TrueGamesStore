@@ -18,6 +18,7 @@ const Game = sequelize.define('game', {
     price: {type: DataTypes.INTEGER},
     discount: {type: DataTypes.INTEGER, defaultValue: 0},
     poster: {type: DataTypes.STRING, defaultValue: 'no_image.jpeg'},
+    middle_rate: {type: DataTypes.FLOAT, defaultValue: 0.00}
 }, {timestamps: false})
 
 
@@ -91,4 +92,4 @@ Rating.belongsTo(User)
 
 
 
-module.exports = {User, Game, Genre, Category, Basket, Screenshot, GameGenre, GameCategory, GameInBasket}
+module.exports = {User, Game, Genre, Category, Basket, Screenshot, GameGenre, GameCategory, GameInBasket, Rating, Review}
