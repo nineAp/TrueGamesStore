@@ -4,16 +4,24 @@ const deleteImage = require('../utils/deleteImage')
 
 
 async function getAllGames(req, res) {
-    const games = await Game.findAll({include: [Genre, Category]})
+    let {limit, page} = req.query
+    limit = limit || 9
+    page = page || 1
+    let offset = page*limit - limit
+    const games = await Game.findAll({include: [Genre, Category], limit, offset})
     return res.json(games)
 }
 
 async function getGamesByGenres(req, res) {
     const {genresId} = req.body
+    let {limit, page} = req.query
+    limit = limit || 9
+    page = page || 1
+    let offset = page*limit - limit
     if(!genresId) {
         return res.status(500).json({message: 'Internal Error'})
     }
-    const genres = await Genre.findAll({where: {id: genresId}})
+    const genres = await Genre.findAll({where: {id: genresId}, limit, offset})
     const response = []
     for(let genre of genres) {
         response.push(...await genre.getGames())
@@ -23,10 +31,14 @@ async function getGamesByGenres(req, res) {
 
 async function getGamesByCategories(req, res) {
     const {categoriesId} = req.body
+    let {limit, page} = req.queryя
+    limit = limit || 9
+    page = page || 1
+    let offset = page*limit - limit
     if(!categoriesId) {
         return res.status(500).json({message: 'Internal Error'})
     }
-    const categories = await Category.findAll({where: {id: categoriesId}})
+    const categories = await Category.findAll({where: {id: categoriesId}, limit, offset})
     const response = []
     for(let category of categories) {
         response.push(...await category.getGames())

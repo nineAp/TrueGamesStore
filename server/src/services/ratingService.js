@@ -13,6 +13,16 @@ async function getDataForRate(req, res) {
 }
 
 
+async function calculateRating(game) {
+    const ratings = await game.getRatings()
+    let ratings_sum = 0
+    ratings.map((rate) => {
+        ratings_sum+=rate.mark
+    })
+    const middle_mark = ratings_sum/ratings.length
+    await game.update({middle_rate: middle_mark})
+}
+
 async function setRating(req, res) {
     const {game, user} = await getDataForRate(req, res)
     const {mark} = req.body
@@ -23,6 +33,7 @@ async function setRating(req, res) {
     const rating = await Rating.create({mark: mark})
     await rating.setGame(game)
     await rating.setUser(user)
+    await calculateRating(game)
     return res.status(200).json({message: 'Оценка поставлена'})
 }
 
@@ -34,6 +45,7 @@ async function updateRating(req, res) {
         return res.status(500).json({message: 'Internal server error'})
     }
     await rating.update({mark: mark})
+    await calculateRating(game)
     return res.status(200).json({message: 'Оценка обновлена'})
 }
 
@@ -44,6 +56,7 @@ async function removeRating(req, res) {
         return res.status(500).json({message: 'Internal server error'})
     }
     await rating.destroy()
+    await calculateRating(game)
     return res.status(200).json({message: 'Оценка убрана'})
 }
 

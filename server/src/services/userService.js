@@ -21,7 +21,7 @@ async function registration(req, res) {
     const data = {...body, password: password, basketId: basket.id}
     const user = await User.create(data)
     await user.setBasket(basket)
-    return res.json({message: createJwt(user)})
+    return res.json({token: createJwt(user)})
 }
 
 async function auth(req, res) {
