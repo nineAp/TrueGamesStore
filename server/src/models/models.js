@@ -41,7 +41,8 @@ const Screenshot = sequelize.define('screenshot', {
 
 const Review = sequelize.define('review', {
     id: {type: DataTypes.INTEGER, autoIncrement: true, primaryKey: true},
-    body: {type: DataTypes.TEXT, allowNull: false}
+    body: {type: DataTypes.TEXT, allowNull: false},
+    isRec: {type: DataTypes.BOOLEAN}
 })
 
 const Rating = sequelize.define('rating', {

@@ -53,7 +53,7 @@ async function removeRating(req, res) {
     const {game, user} = await getDataForRate(req, res)
     const rating = await Rating.findOne({where: {gameId: game.id, userId: user.id}})
     if(!rating) {
-        return res.status(500).json({message: 'Internal server error'})
+        return res.status(404).json({message: 'Оценка не установлена'})
     }
     await rating.destroy()
     await calculateRating(game)

@@ -7,6 +7,7 @@ const categoryRouter = require('./categoryRouter')
 const screenshotRouter = require('./screenshotRouter')
 const basketRouter = require('./basketRouter')
 const ratingRouter = require('./ratingRouter')
+const reviewRouter = require('./reviewRouter')
 
 router.use('/games', gamesRouter)
 router.use('/users', userRouter)
@@ -15,5 +16,6 @@ router.use('/categories', categoryRouter)
 router.use('/screenshots', screenshotRouter)
 router.use('/basket', basketRouter)
 router.use('/ratings', ratingRouter)
+router.use('/reviews', reviewRouter)
 
 module.exports = router
